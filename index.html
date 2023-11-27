@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Serviços</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <label class="logo">AjudaAi!</label>
+    <button onclick="window.location.href='login.html'">Login</button>
+    <button onclick="window.location.href='cadastro.html'">Cadastro</button>
+  </div>
+  <h2 class="titulo">Serviços disponiveis</h2>
+  <div class="service-list" id="serviceList">
+    <!-- Serviços serão adicionados aqui dinamicamente -->
+   
+
+    <div class="service-item" id="serviceItem">
+
+    
+      
+      
+      
+    </div>
+    
+    
+  </div>
+
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const apiUrl = 'http://localhost:3000';  // Substitua pela URL da sua API
+    
+    // Função para obter todos os serviços disponíveis
+    function getAllServices() {
+        axios.get(`${apiUrl}/all-services`)
+            .then(response => {
+                //console.log('Todos os serviços disponíveis:', response.data);
+                // Atualizar a interface com todos os serviços disponíveis
+                updateAllServicesList(response.data);
+            })
+            .catch(error => {
+                console.error('Erro ao obter todos os serviços disponíveis:');
+            });
+    }
+    // Atualizar a lista de todos os serviços na interface
+    function updateAllServicesList(allServices) {
+        const allServicesList = document.getElementById('serviceList');
+        allServicesList.innerHTML = '';  // Limpar a lista antes de adicionar os novos serviços
+    
+        allServices.forEach(service => {
+            const serviceItem = document.createElement('div');
+            serviceItem.classList.add('service-item');
+            serviceItem.innerHTML = `
+                <strong>${service.service_name}</strong> <br/> <br/>  
+                <Strong>Valor: </strong> R$ ${service.value} <br/> <br/>
+                <strong>Descrição</strong> ${service.description} <br/> <br/>
+                <!-- Botão Contratar --> 
+                <button type="button" class="contratarBtn">Contratar</button>
+            `;
+            allServicesList.appendChild(serviceItem);
+    
+            // Adicionar ouvinte de evento para o botão "Contratar" dentro de cada serviço
+            const contratarBtn = serviceItem.querySelector('.contratarBtn');
+            contratarBtn.addEventListener('click', function () {
+                const numeroWhatsApp = '49999926397';
+                const mensagemWhatsApp = `Olá, estou interessado no serviço ${service.service_name}. Podemos conversar?`;
+                const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagemWhatsApp)}`;
+    
+                // Redirecionar para a conversa no WhatsApp
+                window.location.href = linkWhatsApp;
+            });
+        });
+    }
+
+
+    // Chamar a função para obter todos os serviços disponíveis quando a página carregar
+    getAllServices();
+
+    
+});
+  </script>
+  
+</body>
+</html>

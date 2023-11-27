@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <form id="loginForm" action="http://localhost:8000/login" method="POST" onsubmit="login(); return false;">
+    <label for="loginCpf">CPF:</label>
+    <input type="text" id="loginCpf" name="cpf" required>
+
+    <label for="loginPassword">Senha:</label>
+    <input type="password" id="loginPassword" name="password" required>
+
+    <button type="button" id="loginBtn">Entrar</button>
+</form>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script defer src="login.js"></script>
+
+    
+  </script>
+</body>
+</html>
